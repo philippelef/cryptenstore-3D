@@ -68,7 +68,7 @@ const VideoCube = ({ mute, setMute }) => {
 
 
   return (
-    <mesh position={[4, 2, 2]} onClick={() => setMute(!mute)}>
+    <mesh position={[4, 2, 2]} onClick={() => setMute(!mute)} onPointerDown={() => setMute(!mute)}>
       <boxGeometry args={[3, 3, 3]} />
       <meshStandardMaterial toneMapped={false} >
         <videoTexture attach="map" args={[video]} encoding={THREE.sRGBEncoding} />

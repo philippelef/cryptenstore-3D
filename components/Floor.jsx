@@ -11,11 +11,11 @@ function Floor(props) {
                 resolution={2048}
                 mixBlur={1}
                 mixStrength={40}
-                roughness={1}
+                roughness={0}
                 depthScale={1.2}
                 minDepthThreshold={0.4}
                 maxDepthThreshold={1.4}
-                color="#101010"
+                color="#fafafa"
                 metalness={0.5}
             />
         </mesh>

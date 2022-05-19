@@ -6,3 +6,29 @@
 .canvas{
     background: #000;
 }
+
+.PlayButton a{
+    position: absolute;
+    top: 20%;
+    left: 50%;
+
+    width: 5em;
+    height: 1.9em;
+    border-radius: 1em;
+    justify-items: center;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    text-align: center;
+    transform: translateX(-50%);
+    z-index: 1000;
+    background-color: white;
+    color: black;
+
+    font: Prompt;
+    font-size: 26px;
+    font-weight: 900;
+
+    cursor: pointer;
+}

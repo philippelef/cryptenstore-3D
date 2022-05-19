@@ -3,6 +3,7 @@ import { Canvas, useThree, useLoader } from "@react-three/fiber";
 import styles from '../styles/Home.module.css'
 import { useTexture, OrbitControls, MeshReflectorMaterial } from '@react-three/drei';
 import { useEffect, useRef, useState } from 'react';
+import Head from "next/head";
 import * as THREE from 'three'
 
 
@@ -43,7 +44,7 @@ const VideoCube = ({ mute, setMute }) => {
 
 
   return (
-    <mesh position={[0, 2, 0]} onClick={() => setMute(!mute)}>
+    <mesh position={[0, 2, 0]} >
       <planeGeometry args={[3, 3, 3]} />
       <Sound url="/crache.mp3" mute={mute} />
       <meshStandardMaterial toneMapped={false}>
@@ -75,14 +76,44 @@ function Ground() {
   )
 }
 
+const PlayButton = ({ mute, setMute }) => {
+  return (
+    <div className={styles.PlayButton} onClick={() => setMute(!mute)}>
+      {mute &&
+        <a>
+          OFF
+        </a>
+      }
+      {!mute &&
+        <a>ON
+        </a>}
+
+    </div>
+  )
+}
+
 
 const Home = () => {
   const [mute, setMute] = useState(true)
 
   return (
     <div>
+      <Head>
+        <title>CRYPTENSANG</title>
+        <meta name="CRYPTENSANG" content="3D WORLD" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0 user-scalable=no" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="manifest" href="/site.webmanifest" />
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+        <meta name="msapplication-TileColor" content="#da532c" />
+        <meta name="theme-color" content="#ffffff" />
+        <link href="https://fonts.googleapis.com/css2?family=Karla&family=Oswald&family=Poppins:wght@100&display=swap" rel="stylesheet" />
+      </Head>
       {/* <Mute mute={mute} setMute={setMute} /> */}
       <div className={styles.scene} >
+        <PlayButton mute={mute} setMute={setMute} />
         <Canvas
           shadows={true}
           camera={{ fov: 45, position: [6, 3, 6] }}

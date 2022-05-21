@@ -5,6 +5,9 @@ import { useTexture, OrbitControls, MeshReflectorMaterial } from '@react-three/d
 import { useEffect, useRef, useState } from 'react';
 import Head from "next/head";
 import * as THREE from 'three'
+import { useGLTF } from "@react-three/drei"
+import { Suspense } from "react";
+import Scene from "../components/Scene";
 
 
 function Sound({ url, mute }) {
@@ -27,30 +30,12 @@ function Sound({ url, mute }) {
   return <positionalAudio ref={sound} args={[listener]} />
 }
 
-const VideoCube = ({ mute, setMute }) => {
-  const [video] = useState(() =>
-    Object.assign(document.createElement('video'), { src: 'spacestar.mp4', height: '100px', crossOrigin: 'Anonymous', loop: true })
 
-  )
-
-  video.autoplay = false;
-  video.muted = true;
-  video.playsInline = true;
-
-
-  useEffect(() => {
-    mute ? video.pause() : video.play()
-  }, [video, mute])
-
-
+function Tele({ position, mute, setMute }) {
   return (
-    <mesh position={[0, 2, 0]} >
-      <planeGeometry args={[3, 3, 3]} />
-      <Sound url="/crache.mp3" mute={mute} />
-      <meshStandardMaterial toneMapped={false}>
-        <videoTexture attach="map" args={[video]} />
-      </meshStandardMaterial>
-    </mesh >
+    <Suspense fallback={null}>
+      <Scene position={position} mute={mute} setMute={setMute} />
+    </Suspense>
   )
 }
 
@@ -58,7 +43,7 @@ function Ground() {
   const [floor, normal] = useTexture(['/SurfaceImperfections003_1K_var1.jpg', '/SurfaceImperfections003_1K_Normal.jpg'])
   return (
     <mesh rotation={[-Math.PI * 0.5, 0, 0]} >
-      <planeGeometry args={[10, 10]} />
+      <planeGeometry args={[100, 100]} />
       <MeshReflectorMaterial
         roughnessMap={floor}
         normalMap={normal}
@@ -95,6 +80,9 @@ const PlayButton = ({ mute, setMute }) => {
 
 const Home = () => {
   const [mute, setMute] = useState(true)
+  const [loading, setLoading] = useState(true)
+
+  const cameraRef = useRef()
 
   return (
     <div>
@@ -120,19 +108,22 @@ const Home = () => {
           className={styles.canvas}
         >
           <OrbitControls
+            ref={cameraRef}
             makeDefault
             enableZoom={true}
             enablePan={true}
             target={[0, 2, 0]}
           />
           <Ground position={[0, 0, 0]} />
-          {/* <ambientLight intensity={0.5} /> */}
+          <Tele position={[0, 0.7, 0]} mute={mute} setMute={setMute} />
+          <ambientLight intensity={0.1} />
           <directionalLight position={[1, 1, 1]} intensity={0.7} />
-          <VideoCube mute={mute} setMute={setMute} />
         </Canvas>
       </div >
     </div>
   )
 }
+
+useGLTF.preload('/models/TV.gltf')
 
 export default Home

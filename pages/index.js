@@ -5,7 +5,6 @@ import { useTexture, OrbitControls, MeshReflectorMaterial } from '@react-three/d
 import { useEffect, useRef, useState } from 'react';
 import Head from "next/head";
 import * as THREE from 'three'
-import { useGLTF } from "@react-three/drei"
 import { Suspense } from "react";
 import Scene from "../components/Scene";
 
@@ -46,7 +45,7 @@ function Ground() {
       <planeGeometry args={[100, 100]} />
       <MeshReflectorMaterial
         roughnessMap={floor}
-        normalMap={normal}
+        alphaMap={normal}
         blur={[300, 100]}
         resolution={512}
         mixBlur={1}
@@ -93,11 +92,9 @@ const Home = () => {
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="manifest" href="/site.webmanifest" />
-        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff" />
-        <link href="https://fonts.googleapis.com/css2?family=Karla&family=Oswald&family=Poppins:wght@100&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Karla&family=Oswald&family=Poppins:wght@100&display=swap" />
       </Head>
       {/* <Mute mute={mute} setMute={setMute} /> */}
       <div className={styles.scene} >
@@ -112,9 +109,13 @@ const Home = () => {
             makeDefault
             enableZoom={true}
             enablePan={true}
+            maxPolarAngle={Math.PI / 2}
+            maxAzimuthAngle={Math.PI * 0.9}
+            maxDistance={10}
+            minAzimuthAngle={Math.PI * 0.1}
             target={[0, 2, 0]}
           />
-          <Ground position={[0, 0, 0]} />
+          {/* <Ground position={[0, 0, 0]} /> */}
           <Tele position={[0, 0.7, 0]} mute={mute} setMute={setMute} />
           <ambientLight intensity={0.1} />
           <directionalLight position={[1, 1, 1]} intensity={0.7} />
@@ -123,7 +124,5 @@ const Home = () => {
     </div>
   )
 }
-
-useGLTF.preload('/models/TV.gltf')
 
 export default Home

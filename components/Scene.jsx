@@ -12,12 +12,12 @@ export default function Scene({ ...props }) {
 
 
   const [video] = useState(() =>
-    Object.assign(document.createElement('video'), { src: 'spacestar.mp4', crossOrigin: 'Anonymous', loop: true })
+    Object.assign(document.createElement('video'), { src: '/spacestar.mp4', height: '1000px', width: '1400px', crossOrigin: 'Anonymous', loop: true })
   )
 
   video.autoplay = false;
   video.muted = true;
-  video.playsInline = true;
+  video.playsInline = false;
 
 
   useEffect(() => {
@@ -35,9 +35,12 @@ export default function Scene({ ...props }) {
           <meshPhysicalMaterial clearcoat={1} clearcoatRoughness={0} toneMapped={false}>
             <videoTexture
               attach="map" args={[video]}
-              repeat={[3.4, 5.2]}
+              repeat={[3, 4.8]}
+              // repeat={[3.4, 5.2]}
               // scale={[0.1, 0.1, 0.1]}
-              offset={[0.1, 0.72]}
+              offset={[0.36, 0.8]}
+              format={THREE.RGBAFormat}
+              type={THREE.UnsignedByteType}
               flipY={false}
               wrapT={THREE.RepeatWrapping}
               wrapS={THREE.RepeatWrapping}
@@ -45,6 +48,7 @@ export default function Scene({ ...props }) {
             />
           </meshPhysicalMaterial>
         </mesh>
+
         <mesh geometry={nodes.Cubo046_2.geometry} material={materials.Plastico} />
         <mesh geometry={nodes.Cubo046_3.geometry} material={materials.Metal} />
         <mesh geometry={nodes.Cubo046_4.geometry} material={materials['Materiais.001']} />

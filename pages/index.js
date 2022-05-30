@@ -65,11 +65,11 @@ const PlayButton = ({ mute, setMute }) => {
     <div className={styles.PlayButton} onClick={() => setMute(!mute)}>
       {mute &&
         <a>
-          OFF
+          RESUME
         </a>
       }
       {!mute &&
-        <a>ON
+        <a>PAUSE
         </a>}
 
     </div>

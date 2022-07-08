@@ -21,12 +21,9 @@ export default function Model({ ...props }) {
   const { nodes, materials } = useGLTF('/models/scene.gltf')
 
   const [video] = useState(() =>
-    Object.assign(document.createElement('video'), { src: '/spacestar.mp4', height: '1000px', width: '1400px', crossOrigin: 'Anonymous', loop: true })
+    Object.assign(document.createElement('video'), { src: '/spacestar.mp4', height: '1000px', width: '1400px', crossOrigin: 'Anonymous', loop: true, muted: true, playsInline: false, autoplay: false })
   )
 
-  useFrame(() => {
-    group.current.rotation.set(0, group.current.rotation.y+ 0.003, 0)
-  })
 
   video.autoplay = false;
   video.muted = true;
@@ -36,17 +33,23 @@ export default function Model({ ...props }) {
   useEffect(() => {
     props.mute ? video.pause() : video.play()
   }, [video, props.mute])
+  
   return (
-    <group ref={group} {...props} dispose={null}>
-      <group rotation={[-Math.PI / 2, 0, 0]} scale={2}>
-        <group rotation={[Math.PI / 2, 0, 0]}>
+    <group ref={group} {...props} dispose={null} position={[0, -0.3, 0]}>
+      <group rotation={[0, 0, 0]} scale={1.2}>
+        <group rotation={[0, -Math.PI / 2, 0]}>
         <mesh
           castShadow
           receiveShadow
           scale={[1, 1, 1]}
           geometry={nodes.defaultMaterial.geometry}>
-          <meshPhysicalMaterial toneMapped={false}>
+          <meshPhysicalMaterial 
+          clearcoat={0.5} 
+          clearcoatRoughness={1} 
+          toneMapped={false}
+          >
             <videoTexture
+              // attach="map" args={[video]}
               attach="map" args={[video]}
               repeat={[3.5, 4.02]}
               // repeat={[3.4, 5.2]}

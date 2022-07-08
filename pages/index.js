@@ -1,12 +1,14 @@
 import { Canvas, useThree, useLoader } from "@react-three/fiber";
 // import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import { useTexture, OrbitControls, MeshReflectorMaterial } from '@react-three/drei';
+import { useTexture, OrbitControls, MeshReflectorMaterial, useProgress } from '@react-three/drei';
 import { useEffect, useRef, useState } from 'react';
 import Head from "next/head";
 import * as THREE from 'three'
 import { Suspense } from "react";
-import Scene from "../components/Scene";
+import Tele from "../components/Tele";
+import useMouse from '@react-hook/mouse-position'
+
 
 
 function Sound({ url, mute }) {
@@ -30,10 +32,20 @@ function Sound({ url, mute }) {
 }
 
 
-function Tele({ position, mute, setMute }) {
+function Scene({ position, mute, setMute, mouse }) {
   return (
     <Suspense fallback={null}>
-      <Scene position={position} mute={mute} setMute={setMute} />
+      <Canvas
+          shadows={true}
+          camera={{ fov: 45, position: [6, 3, 6] }}
+          className={styles.canvas}
+        >
+          <Tele position={[0, 0.7, 0]} mute={mute} setMute={setMute}/>
+          <ambientLight intensity={0.6} />
+          <directionalLight position={[1, 1, 1]} intensity={2} />
+          <directionalLight position={[-1, 1, 1]} intensity={0.7} color={'blue'} />
+          <directionalLight position={[1, 10, 1]} intensity={2} color={'green'} />
+        </Canvas>
     </Suspense>
   )
 }
@@ -60,12 +72,15 @@ function Ground() {
   )
 }
 
-const PlayButton = ({ mute, setMute }) => {
+const PlayButton = ({ mute, setMute, loading }) => {
+  if (loading === true) {
+    return (<div className={styles.PlayButton}>Loading...</div>)
+  }
   return (
     <div className={styles.PlayButton} onClick={() => setMute(!mute)}>
       {mute &&
         <a>
-          RESUME
+          resume
         </a>
       }
       {!mute &&
@@ -76,12 +91,26 @@ const PlayButton = ({ mute, setMute }) => {
   )
 }
 
+const Cryptensang = () => {
+  return (
+    <div className={styles.Title}>
+            Cryptensang
+    </div>
+  )
+}
+
 
 const Home = () => {
   const [mute, setMute] = useState(true)
   const [loading, setLoading] = useState(true)
 
-  const cameraRef = useRef()
+  const { progress} = useProgress()
+  useEffect(() => {
+    console.log(progress)
+    if (progress === 100) {
+      setLoading(false)
+    }
+  }, [progress])
 
   return (
     <div>
@@ -98,28 +127,11 @@ const Home = () => {
       </Head>
       {/* <Mute mute={mute} setMute={setMute} /> */}
       <div className={styles.scene} >
-        <PlayButton mute={mute} setMute={setMute} />
-        <Canvas
-          shadows={true}
-          camera={{ fov: 45, position: [6, 3, 6] }}
-          className={styles.canvas}
-        >
-          <OrbitControls
-            ref={cameraRef}
-            makeDefault
-            enableZoom={true}
-            enablePan={true}
-            maxPolarAngle={Math.PI / 2}
-            maxAzimuthAngle={Math.PI * 0.9}
-            maxDistance={10}
-            minAzimuthAngle={Math.PI * 0.1}
-            target={[0, 2, 0]}
-          />
-          {/* <Ground position={[0, 0, 0]} /> */}
-          <Tele position={[0, 0.7, 0]} mute={mute} setMute={setMute} />
-          <ambientLight intensity={0.1} />
-          <directionalLight position={[1, 1, 1]} intensity={0.7} />
-        </Canvas>
+        
+        <Cryptensang />
+        <PlayButton mute={mute} setMute={setMute} loading={loading}/>
+        <Scene />
+        
       </div >
     </div>
   )

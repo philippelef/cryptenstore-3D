@@ -7,10 +7,28 @@
     background: #000;
 }
 
+.Title {
+    font-family: widescreen;
+    font-size: 2em;
+    background-color: transparent;
+    position: absolute;
+    top: 0;
+    left: 16px;
+    z-index: 1000;
+
+    letter-spacing: 0px;
+    user-select: none;
+    
+}
+
 .PlayButton a{
+
+    font-family: widescreen;
     position: absolute;
     top: 20%;
     left: 50%;
+
+    user-select: none;
 
     width: 5em;
     height: 1.9em;

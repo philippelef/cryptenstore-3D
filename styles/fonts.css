@@ -1,0 +1,17 @@
+@font-face {
+    font-family: 'Grotesk';
+    src: url("/fonts/grot.woff2");
+}
+
+@font-face {
+    font-family: 'effra';
+    src: url("/fonts/effra.ttf");
+}
+@font-face {
+    font-family: 'venn';
+    src: url("/fonts/venn.ttf");
+}
+@font-face {
+    font-family: 'widescreen';
+    src: url("/fonts/widescreen.ttf");
+}

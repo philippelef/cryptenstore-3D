@@ -14,7 +14,7 @@
     position: absolute;
     top: 0;
     left: 16px;
-    z-index: 1000;
+    z-index: 1;
 
     letter-spacing: 0px;
     user-select: none;
@@ -40,7 +40,7 @@
     flex-direction: column;
     text-align: center;
     transform: translateX(-50%);
-    z-index: 1000;
+    z-index: 1;
     background-color: white;
     color: black;
 
@@ -49,4 +49,43 @@
     font-weight: 900;
 
     cursor: pointer;
+}
+
+.LoadingCover {
+    position: absolute;
+    inset: 0;
+    background-color: black;
+    z-index: 100;
+    font-size: 2em;
+    
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.7s ease-in;
+}
+
+.EnterAnim {
+    transform: translateY(-100%);
+}
+
+.EnterButton {
+    user-select: none;
+    /* background-color: red; */
+    width: 5em;
+    line-height: 200%;
+    border-radius: 10px;
+
+    letter-spacing: 2px;
+    
+    text-align: center;
+
+    transition: all 0.2s;
+    color: rgba(254, 254, 254, 0.7)
+}
+
+.EnterButton:hover {
+    /* background-color: rgba(255, 255, 255, 0.02); */
+    text-shadow: 1px 1px 30px rgba(255, 255, 255, 0.471);
+    color: rgba(254, 254, 254, 1)
 }

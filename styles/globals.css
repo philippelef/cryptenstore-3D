@@ -4,7 +4,9 @@ body {
   color: white;
   padding: 0;
   margin: 0;
-  font-family: 'Prompt', sans-serif;
+  font-family: widescreen;
+
+  overflow: hidden;
 }
 
 a {
